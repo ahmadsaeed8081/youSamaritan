@@ -111,7 +111,11 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to={"/staking"} className="tw-text-black">
+            <Link
+              to={"/"}
+              onClick={() => handleNavigate("/", "teamSection")}
+              className="tw-text-black"
+            >
               Team
             </Link>
           </li>

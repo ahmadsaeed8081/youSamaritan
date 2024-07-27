@@ -21,10 +21,9 @@ const FAQ = () => {
       data:<div>
         <p> "YouSamaritan is primarily a donation platform. You may claim tax deductions when you make a donor purchase of Samaritan Token. If you decide to keep the profit, you instantly become an investor. It’s your choice!</p>
         <p>It’s a multi-purpose token. It has several use case. It’s a Utility Token. It’s a donation coin + DEX coin + ecommerce coin. We are tagged as the Shit Coin Killer. Watch this video to know what makes YouSamaritan a brilliant project:  </p>
-        <p>Watch this video to know what makes YouSamaritan a brilliant project: <Link to={' https://youtu.be/_ndSsSeXU1Y'}> https://youtu.be/_ndSsSeXU1Y</Link></p>
+        <p>Watch this video to know what makes YouSamaritan a brilliant project: <Link to={'https://youtu.be/_ndSsSeXU1Y'}> https://youtu.be/_ndSsSeXU1Y</Link></p>
       </div>,
       isOpen: false,
-      // link: "https://youtu.be/_ndSsSeXU1Y",
     },
     {
       key: 3,
@@ -40,7 +39,7 @@ const FAQ = () => {
       title: "What are the benefits of owning Samaritan tokens early?",
       data: <div>
         <p>Early donor purchase benefit from lower token prices, as the price increases through nine scheduled rounds... Early adoption also provides more significant rewards and potential appreciation as the platform grows</p>
-        <p>Watch this video to know the benefits of owning Samaritan Tokens early: <Link to={' https://youtu.be/_ndSsSeXU1Y'}> https://youtu.be/_ndSsSeXU1Y</Link></p>
+        <p>Watch this video to know the benefits of owning Samaritan Tokens early: <Link to={'https://youtu.be/_ndSsSeXU1Y'}> https://youtu.be/_ndSsSeXU1Y</Link></p>
       </div>,
       isOpen: false,
     },
@@ -133,7 +132,7 @@ const FAQ = () => {
       title: "What if I refer someone?",
       data: "You will get a referral link. And when you refer someone to YouSamaritan, you are entitled to make 5 –10% share. Join our telegram group to learn more about the potential reward in successfully representing YouSamaritan: ",
       isOpen: false,
-      link: "https://t.me/OfficialYouSamarita",
+      link: "https://t.me/OfficialYouSamaritan",
     },
   ]);
 
