@@ -62,7 +62,7 @@ const Header = () => {
   return (
     <nav  className={`tw-top-0 tw-w-full tw-z-20 ${
       scrollBackground ? "tw-bg-white sm:tw-bg-transparent tw-fixed" : ""
-    } sm:tw-relative md:tw-sticky`}>
+    } sm:tw-relative md:tw-sticky `}>
       <div className="tw-flex tw-items-center tw-font-medium tw-h-32 container tw-mx-auto tw-justify-between">
         <div className="">
           <img
@@ -155,7 +155,7 @@ const Header = () => {
         {/* Mobile nav */}
         <div
           className={`
-            lg:tw-hidden     tw-shadow-xl tw-bg-white  tw-fixed tw-w-full tw-top-0 tw-overflow-y-auto tw-bottom-0 tw-leading-10 tw-py-10 
+            lg:tw-hidden   tw-z-20  tw-shadow-xl tw-bg-white  tw-fixed tw-w-full tw-top-0 tw-overflow-y-auto tw-bottom-0 tw-leading-10 tw-py-10 
             tw-duration-500 ${open1 ? "tw-left-0" : "  tw-left-[-100%]"}
           `}
         >
