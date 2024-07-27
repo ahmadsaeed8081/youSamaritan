@@ -1,0 +1,13 @@
+/* Custom styles for Slick slider pagination dots */
+.slick-dots li button:before {
+    font-size: 17px !important;
+    width: 17px !important;
+    height: 17px !important;
+    color: #D9D9D9 !important;
+    opacity: 1 !important; /* Set the color you want for the dots */
+    
+  }
+  
+  .slick-dots li.slick-active button:before {
+    color: #2E94CB !important; /* Set the color you want for the active dot */
+  }
