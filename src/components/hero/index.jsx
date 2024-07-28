@@ -420,12 +420,12 @@ GET SAMARITAN <FaArrowRight color="#456DA7" />
 
                       <span className="tw-text-[#456DA7] sm:tw-text-base tw-text-[12px]  tw-flex tw-items-center tw-gap-2  m-0">REF LINK  
                       <CopyToClipboard
-                        text={`https://www.yousmaritan.com/?ref=${address? address:""}`}
+                        text={`https://samaritan1.vercel.app/?ref=${address? address:""}`}
                       >
                       <PiCopyLight  color="#456DA7" />
                         </CopyToClipboard>
                         </span>
-                        <p className=" m-0 sm:tw-text-base tw-text-[10px] tw-text-[#456DA7]">https://www.yousmaritan.com/?ref={address? address.slice(0,3)+"..."+address.slice(39,42):""}</p>
+                        <p className=" m-0 sm:tw-text-base tw-text-[10px] tw-text-[#456DA7]">https://samaritan1.vercel.app/?ref={address? address.slice(0,3)+"..."+address.slice(39,42):""}</p>
 
                     </div>
 
