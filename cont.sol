@@ -54,8 +54,8 @@ contract YouSamartian_Presale
         uint public total_soldSupply;
         uint public total_stages=3;
         uint public total_raised;
-        uint public min_purchase= 3 ether;
-        uint public min_refPurchase= 5 ether;
+        uint public min_purchase= 0 ether;
+        uint public min_refPurchase= 0 ether;
         bool public doubleToken_promo;
         bool public doublDirectPercentage_promo;
         address[] public Cso_arr;
@@ -63,8 +63,8 @@ contract YouSamartian_Presale
 
         bool public launch_start;
 
-        address public USDT_token=0xc2132D05D31c914a87C6611C10748AEb04B58e8F;
-        address public samartian_token=0xeaC39580973ca566b455E5eD8e815606EA21f104;
+        address public USDT_token=0x341343568948459e5b7017eDDb05110cfA3EF699;
+        address public samartian_token=0x51a61EC45a849360580Daaa52b1a30D699D1BB32;
 
         uint[3] price_arr=[0.062 ether, 0.072 ether, 0.1 ether];
         uint[3] supply_arr=[16000000 ether, 14000000 ether, 10000000 ether];
@@ -75,7 +75,7 @@ contract YouSamartian_Presale
         {
             
             owner= payable(msg.sender);
-            
+            launch_start=true;
             for(uint i=0;i<3;i++)
             {
                 presale[i].price = price_arr[i];
@@ -160,16 +160,14 @@ contract YouSamartian_Presale
             percentage[0] = 5;
             percentage[1] = 3;
             percentage[2] = 1;
-            // percentage[3] = 1;
-            // percentage[4] = 2;
-            uint remaining= _investedAmount;
+
+            uint remaining = _investedAmount;
 
 
             if((choosed_token==0 && ((get_MaticPrice() * _investedAmount) /1 ether) >= min_refPurchase) || (choosed_token==1 &&  _investedAmount >= min_refPurchase))
             {
                 for(uint i=0;i<3;i++)
                 {
-
                     
                     if(user[temp].upliner!=address(0))
                     {
@@ -177,12 +175,11 @@ contract YouSamartian_Presale
                         temp = user[temp].upliner;
                         uint reward1 = ((percentage[i] * 1 ether) * _investedAmount)/100 ether;
 
-                    if(doublDirectPercentage_promo && i==0)
-                    {
-                        reward1*=2;
-                    }
+                        if(doublDirectPercentage_promo && i==0)
+                        {
+                            reward1*=2;
+                        }
                     
-
                         if(choosed_token==0)
                         {
                             payable(temp).transfer(reward1);
@@ -212,8 +209,7 @@ contract YouSamartian_Presale
                     if(temp != address(0) &&  user[temp].isCso)
                     {
 
-                        temp = user[temp].upliner;
-                        uint reward1 = ( 1 ether * _investedAmount)/100 ether;
+                        uint reward1 = ( 2 ether * _investedAmount)/100 ether;
                         
                         if(choosed_token==0)
                         {
@@ -236,7 +232,8 @@ contract YouSamartian_Presale
 
                 }
 
-                            temp = user[investor].upliner; 
+                temp = user[investor].upliner; 
+
                 for(uint i=0;i<j;i++)
                 {
 
@@ -244,7 +241,6 @@ contract YouSamartian_Presale
                     if(temp != address(0) &&  user[temp].isEmb)
                     {
 
-                        temp = user[temp].upliner;
                         uint reward1 = ( 1 ether * _investedAmount)/100 ether;
 
                         if(choosed_token==0)
@@ -258,7 +254,7 @@ contract YouSamartian_Presale
 
                         user[temp].Emb_Earning+=reward1 ;                  
                         remaining-=reward1;  
-                        j=21;              
+                        i=j;              
                     } 
                     else
                     {
@@ -284,8 +280,7 @@ contract YouSamartian_Presale
 
         function buy_token(uint amount ,address _referral ,uint choosed_token )  public payable returns(bool){
             
-            require(choosed_token ==0 && choosed_token ==1);
-            require(amount >= min_purchase);
+            require(choosed_token == 0 || choosed_token ==1);
 
             require(launch_start,"not launched");
 
@@ -320,7 +315,6 @@ contract YouSamartian_Presale
                 
                 presale[curr_stage].total_sold+=bought_token;
                 total_soldSupply+=bought_token;
-                // owner.transfer(msg.value);  
                 
                 sendRewardToReferrals( msg.sender, msg.value,choosed_token);
 
@@ -349,10 +343,8 @@ contract YouSamartian_Presale
                 require(TOKEN(samartian_token).balanceOf(address(this)) >= bought_token,"contract have less tokens");
                 
                 presale[curr_stage].total_sold+=amount;
-                total_soldSupply+=amount;
-
+                total_soldSupply+=amount;            
                 sendRewardToReferrals( msg.sender, amount,choosed_token);
-                // TOKEN(USDT_token).transferFrom(msg.sender,owner,amount/10**12);
                 if(doubleToken_promo)
                 {
                     TOKEN(samartian_token).transfer(msg.sender,bought_token*2);
@@ -492,5 +484,14 @@ contract YouSamartian_Presale
 
             Emb_arr.push(_add); 
         }
-
+        function set_minPurchase(uint _val)  public
+        {
+            require(msg.sender==owner);
+            min_purchase=_val;
+        }
+        function set_minRefPurchase(uint _val)  public
+        {
+            require(msg.sender==owner);
+            min_refPurchase=_val;
+        }
     }

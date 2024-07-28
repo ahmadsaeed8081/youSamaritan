@@ -110,7 +110,6 @@ const Hero = (props) => {
   
     if(params.get("ref")!=null)
     {
-      alert("kj")
       set_ref(params.get("ref"))
 
     }
@@ -252,6 +251,11 @@ const Hero = (props) => {
         return;
       }
 
+      if (Number(props.minPurchase_matic)/10**18 > Number(payAmount)) {
+        alert("Minimum purchase is "+ (Number(props.minPurchase_matic)/10**18).toFixed(1)  +" MATIC");
+        return;
+      }
+
       if (chainId != currentChainId )
       {
         await switchChainAsync({ chainId });
@@ -268,7 +272,10 @@ const Hero = (props) => {
         alert("You don't have enough USDT");
         return;
       }
-
+      if (Number(props.min_purchase)/10**18 > Number(payAmount)) {
+        alert("Minimum purchase is "+Number(props.min_purchase)/10**18  +" USDT");
+        return;
+      }
       if (chainId != currentChainId) {
         await switchChainAsync({ chainId });
         await usdt_approval?.();
@@ -705,7 +712,7 @@ GET SAMARITAN <FaArrowRight color="#456DA7" />
 :null
             }
 
-{props.isCso?
+{props.isEmb?
               <tr className="bg-white border-t rounded-md">
                 <td className="align-middle text-sm font-normal px-6 py-2 whitespace-nowrap text-center">
                   <span className="text-base text-black tw-font-poppins py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline bg-green-200 rounded-full">
@@ -751,6 +758,8 @@ GET SAMARITAN <FaArrowRight color="#456DA7" />
       </div>
 
       <div></div>
+      <ToastContainer />
+
     </div>
   );
 };
