@@ -1,9 +1,9 @@
 
-export const ebm_address="0x7Ed2D0e9C1a7F9f51115e0e70BDB55E7D652e35c"
-export const usdt_address="0x341343568948459e5b7017eDDb05110cfA3EF699";
+export const ebm_address="0x2484b0c9f6C500EB763c8b1F95e5057560139279"
+export const usdt_address="0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063";
 
-export const presale_address="0x75F0dE4D074947B986b79aa9B02139e235494aEA";
-export const staking_address="0xbE76E8ade48Cde5e22f6B84B6BacA306608A93Ff";
+export const presale_address="0x041a836e5116b0b8d3Fe3a8d914Effc05CcCdc16";
+export const staking_address="0xdAF330EC188d82dc9ae5Cf2f543314E09ab44476";
 
 
 export const staking_abi=[

@@ -27,15 +27,11 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to={'https://t.me/OfficialYouSamaritan'} >
+                  <Link to={'https://t.me/+c28JVp_JCsxlODNl'} >
                   <FaTelegram size={30} color="#F9A11E" />
                   </Link>
                 </li>
-                <li>
-                  <Link to={'https://t.me/+9FfF7v_hUbNmZWQ8'} >
-                    <img src={require("../../assets/images/mdi_twitter.png")} />
-                  </Link>
-                </li>
+
                 <li>
                   <Link to={'https://www.reddit.com/user/ButchTabligan/'} >
                     <img src={require("../../assets/images/free-reddit-logo-icon-2436-thumb 1.png")} />
@@ -52,7 +48,7 @@ const Footer = () => {
       </div>
       <div className="tw-bg-button-gradient tw-w-full tw-py-2  tw-text-center">
         <p className=" sm:tw-text-lg tw-text-sm tw-m-0 tw-text-white">
-        Central Office: 29th Floor, World Plaza, 5th Ave, BGC https://YouSamaritan,com
+        Central Office: 29th Floor, World Plaza, 5th Ave, BGC https://YouSamaritan.com
         </p>
       </div>
     </div>

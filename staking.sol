@@ -14,8 +14,8 @@ contract YouSamartian_Staking
        
         address  public owner;
 
-        address Staking_token= 0x51a61EC45a849360580Daaa52b1a30D699D1BB32; 
-        address Reward_Token= 0x51a61EC45a849360580Daaa52b1a30D699D1BB32; 
+        address Staking_token= 0x7Ed2D0e9C1a7F9f51115e0e70BDB55E7D652e35c; 
+        address Reward_Token= 0x7Ed2D0e9C1a7F9f51115e0e70BDB55E7D652e35c; 
 
      mapping(address=>bool) public isUser;
 

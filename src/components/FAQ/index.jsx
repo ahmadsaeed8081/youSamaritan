@@ -29,7 +29,7 @@ const FAQ = () => {
       key: 3,
       title: " How can I make a donor purchase of Samaritan tokens?",
       data:<div>
-        <p>Samaritan tokens can be purchased during our token sale rounds or through supported cryptocurrency exchanges. Detailed instructions are available on our web page. <Link to={'#'}>Click here.</Link> </p>
+        <p>Samaritan tokens can be purchased during our token sale rounds or through supported cryptocurrency exchanges. Detailed instructions are available on our web page. </p>
       </div>,
       isOpen: false,
       // link:'Click here.'
@@ -132,7 +132,7 @@ const FAQ = () => {
       title: "What if I refer someone?",
       data: "You will get a referral link. And when you refer someone to YouSamaritan, you are entitled to make 5 –10% share. Join our telegram group to learn more about the potential reward in successfully representing YouSamaritan: ",
       isOpen: false,
-      link: "https://t.me/OfficialYouSamaritan",
+      link: "https://t.me/+c28JVp_JCsxlODNl",
     },
   ]);
 

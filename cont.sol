@@ -2,6 +2,8 @@
 
 pragma solidity ^0.8.20;
 
+//make it upgradable smart contract
+
 interface TOKEN
 {
     function transfer(address to, uint tokens) external returns (bool success);
@@ -52,7 +54,7 @@ contract YouSamartian_Presale
 
         address payable public owner;
         uint public total_soldSupply;
-        uint public total_stages=3;
+        uint public total_stages=10;
         uint public total_raised;
         uint public min_purchase= 0 ether;
         uint public min_refPurchase= 0 ether;
@@ -61,26 +63,25 @@ contract YouSamartian_Presale
         address[] public Cso_arr;
         address[] public Emb_arr;
 
-        bool public launch_start;
 
-        address public USDT_token=0x341343568948459e5b7017eDDb05110cfA3EF699;
-        address public samartian_token=0x51a61EC45a849360580Daaa52b1a30D699D1BB32;
+        address public DAI_token=0x341343568948459e5b7017eDDb05110cfA3EF699;
+        address public samartian_token=0x7Ed2D0e9C1a7F9f51115e0e70BDB55E7D652e35c;
 
-        uint[3] price_arr=[0.062 ether, 0.072 ether, 0.1 ether];
-        uint[3] supply_arr=[16000000 ether, 14000000 ether, 10000000 ether];
+        uint[10] supply_arr=[24000000000000 ether, 27000000000000 ether,30000000000000 ether,33000000000000 ether, 36000000000000 ether,39000000000000 ether,42000000000000 ether, 45000000000000 ether,54000000000000 ether,29640000000000 ether];
+        uint[10] price_arr =[0.00000001611 ether, 0.00000002549 ether, 0.00000004033 ether,0.00000006382 ether, 0.00000010098 ether, 0.00000015979 ether,0.00000025283 ether, 0.00000040005 ether, 0.00000063300 ether, 0.00000100160 ether];
+        uint[10] time_arr =[90 days, 150 days, 180 days,210 days,240 days,270 days,300 days,330 days,360 days,390 days];
 
         AggregatorV3Interface internal priceFeed = AggregatorV3Interface(0xAB594600376Ec9fD91F8e885dADF0CE036862dE0);
 
         constructor()
         {
             
-            owner= payable(msg.sender);
-            launch_start=true;
-            for(uint i=0;i<3;i++)
+            owner= payable(0x429Bd34fCA425c18FA5F790F6c4aC035bF1a152d);
+            for(uint i=0;i<10;i++)
             {
                 presale[i].price = price_arr[i];
                 presale[i].supply = supply_arr[i];
-                presale[i].endTime = block.timestamp + ( 7 days * (i+1));
+                presale[i].endTime = block.timestamp + time_arr[i];
 
             }
             
@@ -113,7 +114,7 @@ contract YouSamartian_Presale
 
 
         function get_curr_Stage()  public view returns(uint ){
-            uint curr_stage=2;
+            uint curr_stage=9;
 
             for(uint i=0;i<total_stages;i++)
             {
@@ -128,7 +129,7 @@ contract YouSamartian_Presale
 
 
         function get_curr_StageTime()  public view returns(uint ){
-            uint curr_stageTime=2;
+            uint curr_stageTime=9;
 
             for(uint i=0;i<total_stages;i++)
             {
@@ -185,7 +186,7 @@ contract YouSamartian_Presale
                             payable(temp).transfer(reward1);
                         }
                         else{
-                            TOKEN(USDT_token).transferFrom(msg.sender,temp,reward1/10**12);
+                            TOKEN(DAI_token).transferFrom(msg.sender,temp,reward1);
 
                         }
 
@@ -216,7 +217,7 @@ contract YouSamartian_Presale
                             payable(temp).transfer(reward1);
                         }
                         else{
-                            TOKEN(USDT_token).transferFrom(msg.sender,temp,reward1/10**12);
+                            TOKEN(DAI_token).transferFrom(msg.sender,temp,reward1);
 
                         }
 
@@ -248,7 +249,7 @@ contract YouSamartian_Presale
                             payable(temp).transfer(reward1);
                         }
                         else{
-                            TOKEN(USDT_token).transferFrom(msg.sender,temp,reward1/10**12);
+                            TOKEN(DAI_token).transferFrom(msg.sender,temp,reward1);
 
                         }
 
@@ -271,8 +272,9 @@ contract YouSamartian_Presale
             {
                 payable(owner).transfer(remaining);
             }
-            else{
-                TOKEN(USDT_token).transferFrom(msg.sender,owner,remaining/10**12);
+            else{                                                             
+                                                            
+                TOKEN(DAI_token).transferFrom(msg.sender,owner,remaining);
 
             }
 
@@ -282,7 +284,6 @@ contract YouSamartian_Presale
             
             require(choosed_token == 0 || choosed_token ==1);
 
-            require(launch_start,"not launched");
 
             uint curr_stage = get_curr_Stage();
             uint bought_token;
@@ -337,8 +338,8 @@ contract YouSamartian_Presale
 
                 bought_token = (amount*10**18) / presale[curr_stage].price;
 
-                require(TOKEN(USDT_token).balanceOf(msg.sender) >= amount/10**12 ,"not enough usdt");
-                require(TOKEN(USDT_token).allowance(msg.sender,address(this))>= amount/10**12 ,"less allowance");    //uncomment
+                require(TOKEN(DAI_token).balanceOf(msg.sender) >= amount ,"not enough usdt");
+                require(TOKEN(DAI_token).allowance(msg.sender,address(this))>= amount ,"less allowance");    //uncomment
 
                 require(TOKEN(samartian_token).balanceOf(address(this)) >= bought_token,"contract have less tokens");
                 
@@ -389,32 +390,20 @@ contract YouSamartian_Presale
             }
         }
 
-        function start_launch()  public
-        {
-            require(msg.sender==owner);
-            require(!launch_start);
 
-            launch_start=true;
-            for(uint i=0;i<3;i++)
-            {
-                
-                presale[i].endTime = block.timestamp + ( 7 days * (i+1));
-
-            }
-        }
         function curr_time() public view returns(uint){
 
             return block.timestamp;
 
         }
 
-        function referralLevel_earning() public view returns( uint[] memory arr1 )
+        function referralLevel_earning(address _add) public view returns( uint[] memory arr1 )
         {
             uint[] memory referralLevels_reward=new uint[](3);
             for(uint i=0;i<3;i++)
             {
                
-                referralLevels_reward[i] = user[msg.sender].referralLevel[i].earning;
+                referralLevels_reward[i] = user[_add].referralLevel[i].earning;
 
 
             }
@@ -425,13 +414,13 @@ contract YouSamartian_Presale
 
 
 
-        function referralLevel_count() public view returns( uint[] memory _arr )
+        function referralLevel_count(address _add) public view returns( uint[] memory _arr )
         {
             uint[] memory referralLevels_reward=new uint[](3);
             for(uint i=0;i<3;i++)
             {
 
-                referralLevels_reward[i] = user[msg.sender].referralLevel[i].count;
+                referralLevels_reward[i] = user[_add].referralLevel[i].count;
 
             }
             return referralLevels_reward ;
