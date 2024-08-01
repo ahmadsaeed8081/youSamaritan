@@ -38,7 +38,7 @@ import { polygon, polygonAmoy } from "wagmi/chains";
 const Hero = (props) => {
 
   const chainId = process.env.REACT_APP_ENV == "production" ? polygon.id : polygonAmoy.id;
-  const [selectedCurrency, setSelectedCurrency] = useState("USDT");
+  const [selectedCurrency, setSelectedCurrency] = useState("DAI");
 
   const [payAmount, set_payAmount] = useState(0);
   const [receiveAmount, set_receiveAmount] = useState(0);
@@ -153,7 +153,7 @@ const Hero = (props) => {
         const tx = await writeContractAsync({
           abi: token_abi,
           address: usdt_address,
-          args: [presale_address, payAmount ? Number(payAmount) * 10 ** 6 : "0"],
+          args: [presale_address, payAmount ? Number(payAmount) * 10 ** 18 : "0"],
           functionName: "approve",
 
         }); 
@@ -196,7 +196,7 @@ const Hero = (props) => {
     }
 
     let price;
-    if (selectedCurrency=="USDT" || selectedCurrency=="USDC") {
+    if (selectedCurrency=="DAI" || selectedCurrency=="USDC") {
       price = Number(props.curr_presale.price) / 10 ** 18;
     } else {
       price = Number(props.perTokenIn_Matic) / 10 ** 18;
@@ -217,7 +217,7 @@ const Hero = (props) => {
       return;
     }
     let price;
-    if (selectedCurrency=="USDT" || selectedCurrency=="USDC") {
+    if (selectedCurrency=="DAI" || selectedCurrency=="USDC") {
       price = Number(props.curr_presale.price) / 10 ** 18;
     } else {    
       price = Number(props.perTokenIn_Matic) / 10 ** 18;
@@ -266,9 +266,9 @@ const Hero = (props) => {
         await buytoken1?.();
       }
     } 
-    else if(selectedCurrency=="USDT" )
+    else if(selectedCurrency=="DAI" )
     {
-      if (Number(props.USDTBalance) < Number(payAmount) * 10 ** 6) {
+      if (Number(props.USDTBalance) < Number(payAmount) * 10 ** 18) {
         alert("You don't have enough USDT");
         return;
       }
@@ -375,7 +375,7 @@ GET SAMARITAN <FaArrowRight color="#456DA7" />
 
                     <div className="  tw-text-center tw-py-4">
                       <p className="  tw-text-lg  tw-m-0 tw-text-black">
-                        Total Raised: <sapn className=" tw-text-lg tw-font-semibold tw-text-[#456DA7]"> ${props.total_raised ? (Number(props.total_raised)/10**6).toFixed(2):0} </sapn>
+                        Total Raised: <sapn className=" tw-text-lg tw-font-semibold tw-text-[#456DA7]"> ${props.total_raised ? (Number(props.total_raised)/10**18).toFixed(2):0} </sapn>
                       </p>
                       <div className=" tw-flex tw-justify-between tw-items-center">
                         <p className=" tw-m-0 sm:tw-text-base tw-text-[10px] tw-font-poppins tw-text-[#456DA7]">
@@ -403,12 +403,12 @@ GET SAMARITAN <FaArrowRight color="#456DA7" />
 
                       <div className=" tw-flex tw-justify-between tw-items-center">
                         <p className=" tw-m-0  sm:tw-text-base tw-text-[10px]  tw-font-poppins  tw-font-medium tw-text-black">
-                        1 SMT = {props.curr_presale.price
-                        ? Number(props.curr_presale.price) / 10 ** 18
+                        1 SMT = ${props.curr_presale.price
+                        ? (Convert_To_eth(props.curr_presale.price) )
                         : ""}                        </p>
                         <p className=" tw-m-0 sm:tw-text-base tw-text-[10px] tw-font-poppins  tw-font-medium  tw-text-black">
-                        Next = {Number(props.NextStagePrice)
-                          ? Number(props.NextStagePrice) / 10 ** 18
+                        Next = ${Number(props.NextStagePrice)
+                          ? Convert_To_eth(props.NextStagePrice) 
                           : ""}                       
                            </p>
                       </div>
@@ -451,23 +451,25 @@ GET SAMARITAN <FaArrowRight color="#456DA7" />
                         <p className="tw-m-0 tw-text-black">MATIC</p>
                       </div>
                       <div
-                        className={`tw-rounded-md  tw-w-full tw-h-[48px]  tw-justify-between tw-pr-5 tw-flex tw-items-center tw-mt-2 ${selectedCurrency==="USDT"?' tw-border-2 tw-border-[#456DA7]': 'tw-border-2 border'}`}
-                        onClick={() => handleSelect("USDT")}
+                        className={`tw-rounded-md  tw-w-full tw-h-[48px]  tw-justify-between tw-pr-5 tw-flex tw-items-center tw-mt-2 ${selectedCurrency==="DAI"?' tw-border-2 tw-border-[#456DA7]': 'tw-border-2 border'}`}
+                        onClick={() => handleSelect("DAI")}
                       >
                         <div>
-                          <img
-                            src={require("../../assets/images/c1.png")}
-                            alt="USDT"
+                          <img 
+                            src={require("../../assets/images/Dailogo.png")}
+                            alt="DAI"
+                            height={"20px"}
+                            width={"30px"}
                           />
                         </div>
-                        <p className="tw-m-0 tw-text-black">USDT</p>
+                        <p className="tw-m-0 tw-text-black">DAI</p>
                       </div>
                     
                     </div>
                     <div className="  tw-gap-3 tw-justify-center  tw-flex tw-items-center tw-text-center tw-pt-4 tw-pb-2">
                       <p className=" tw-w-24 m-0  tw-bg-[#456DA7] tw-h-[2px] "></p>
                       <p className=" tw-uppercase tw-font-medium tw-font-poppins tw-m-0  sm:tw-text-lg tw-text-[10px] tw-text-black">
-                      {selectedCurrency==="MATIC"?'Matic' :'USDT'} Balance = <span className=" tw-text-[#456DA7] tw-font-poppins">{selectedCurrency==="MATIC"? props.MATICBalance ? (Number(props.MATICBalance)/10**18).toFixed(3):"0" : props.USDTBalance ? (Number(props.USDTBalance)/10**6).toFixed(2):"0" }</span>
+                      {selectedCurrency==="MATIC"?'Matic' :'DAI'} Balance = <span className=" tw-text-[#456DA7] tw-font-poppins">{selectedCurrency==="MATIC"? props.MATICBalance ? (Number(props.MATICBalance)/10**18).toFixed(3):"0" : props.USDTBalance ? (Number(props.USDTBalance)/10**18).toFixed(2):"0" }</span>
                       </p>
                       <p className=" tw-w-24 m-0  tw-bg-[#456DA7] tw-h-[2px] "></p>
 
@@ -492,10 +494,10 @@ GET SAMARITAN <FaArrowRight color="#456DA7" />
                             
                             />
                           <div className=" tw-absolute tw-left-1.5  tw-top-0">
-                            {selectedCurrency === "USDT" ? (
+                            {selectedCurrency === "DAI" ? (
                               <img
-                                src={require("../../assets/images/c1.png")}
-                                className=" tw-w-10 tw-h-10"
+                                src={require("../../assets/images/Dailogo.png")}
+                                className=" tw-w-6 tw-h-8 tw-pt-2"
                               />
                             ) :(
                               <img

@@ -40,6 +40,7 @@ function App() {
   const [choosed_Unstake_inv, set_choosed_Unstake_inv] = useState();
   const [allInvestments, set_investmentList] = useState([]);
   const [allInvestments_reward, set_allInvestments_reward] = useState([]);
+  const [is_suspend, set_is_suspend] = useState(false);
 
   const [launch, set_launch] = useState(false);
 
@@ -94,7 +95,6 @@ useEffect(()=>{
 
     const EBM_contract=new web3.eth.Contract(token_abi,ebm_address);
     let USDTBalance;
-    let USDCBalance;
 
     let EBMBalance;
     let totalReward;
@@ -112,16 +112,16 @@ useEffect(()=>{
        USDTBalance = await USDT_contract.methods.balanceOf(address).call(); 
    
        EBMBalance = await EBM_contract.methods.balanceOf(address).call();    
-  
        totalReward = await staking_contract.methods.get_TotalReward().call({ from: address });   
        totalEarning = await staking_contract.methods.get_TotalReward().call({ from: address }); 
        user = await staking_contract.methods.user(address).call();      
        allInvestments = await staking_contract.methods.getAll_investments().call({from: address});
        allInvestments_reward = await staking_contract.methods.getAll_investments_forReward().call({from: address});
-       
-       let ref_count = await presale_contract.methods.referralLevel_count().call({from: address});    
-       let ref_earn = await presale_contract.methods.referralLevel_earning().call({from: address});    
+
+       let ref_count = await presale_contract.methods.referralLevel_count(address).call();    
+       let ref_earn = await presale_contract.methods.referralLevel_earning(address).call();    
        let pre_user = await presale_contract.methods.user(address).call();    
+
        set_refEarning(ref_earn)
        set_refCount(ref_count)
 
@@ -134,11 +134,11 @@ useEffect(()=>{
     }
 
     //presale
-    let min_purchase = await presale_contract.methods.min_purchase().call();    
+    let min_purchase = await presale_contract.methods.min_purchase().call();  
+  
     let min_purchase_matic = await presale_contract.methods.getConversionRate(min_purchase).call();    
 
     let curr_stage = await presale_contract.methods.get_curr_Stage().call();    
-    let launch = await presale_contract.methods.launch_start().call();    
 
     let curr_StageTime = await presale_contract.methods.get_curr_StageTime().call();    
     let perTokenIn_Matic = await presale_contract.methods.get_MaticPrice().call();    
@@ -159,12 +159,13 @@ useEffect(()=>{
 
 
     //staking 
+    let suspend = await staking_contract.methods.suspend().call();    
 
     let currTime = await staking_contract.methods.get_currTime().call();    
     let totalusers = await staking_contract.methods.totalusers().call();    
 
     let totalbusiness = await staking_contract.methods.getTotalInvestment().call();
-    
+    set_is_suspend(suspend)
     set_minPurchase(min_purchase)
     set_minPurchase_matic(min_purchase_matic)
 
@@ -174,7 +175,7 @@ useEffect(()=>{
     set_curr_presale(curr_presale)
     set_perTokenIn_Matic(perTokenIn_Matic)
     set_totalRaised(totalraised)
-    set_launch(launch)
+    set_launch(true)
     set_totalEarning(totalEarning);
     set_curr_time(currTime)
     set_TokenBalance(USDTBalance);
@@ -211,7 +212,7 @@ useEffect(()=>{
     <div className=''>
      <Routes>
       <Route path='/'  element={<Home minPurchase_matic={minPurchase_matic} min_purchase={min_purchase} refEarning={refEarning} refCount={refCount} isEmb={isEmb} isCso={isCso} Emb_Earning={Emb_Earning} Cso_Earning={Cso_Earning} launch={launch} totalInvestment={totalInvestment} total_raised={total_raised}  NextStagePrice={NextStagePrice} test={test} MATICBalance={MATICBalance} EBMBalance={EBMBalance} USDTBalance={USDTBalance} curr_time={curr_time} curr_stage={curr_stage} curr_StageTime={curr_StageTime}  curr_presale={curr_presale} perTokenIn_Matic={perTokenIn_Matic} />}/>
-      <Route path='/staking'  element={<Staking totalwithdraw={totalwithdraw} totalEarning={totalEarning} allInvestments_reward = {allInvestments_reward} totalInvestment={totalInvestment} EBMBalance={EBMBalance} curr_time={curr_time} min_stake={min_stake}  allInvestments={allInvestments}  test={test} />} />
+      <Route path='/staking'  element={<Staking is_suspend={is_suspend} totalwithdraw={totalwithdraw} totalEarning={totalEarning} allInvestments_reward = {allInvestments_reward} totalInvestment={totalInvestment} EBMBalance={EBMBalance} curr_time={curr_time} min_stake={min_stake}  allInvestments={allInvestments}  test={test} />} />
      </Routes>
     </div>
   );

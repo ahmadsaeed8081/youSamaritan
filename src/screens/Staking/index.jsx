@@ -305,6 +305,12 @@ useEffect(()=>{
 
   async function stake()
   {
+    
+    if(props.is_suspend)
+    {
+      alert("Staking is Disable by the admin");
+      return;
+    }
 
     if(isDisconnected)
     {
@@ -317,6 +323,7 @@ useEffect(()=>{
       alert("kindly write amount to stake ");
       return;
     }
+
     if(Number(stakeAmount)<Number(props.min_stake)/10**18 )
     {
       alert("Minimum Stake amount is "+ Number(props.min_stake)/10**18);
